@@ -3,12 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | My Website</title>
+    <title>Home | Ultimate Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+    <div class="page-transition"></div>
+    <div id="preloader">
+        <div class="loader-text">
+            <span>System Initializing...</span>
+            <span class="load-percent">0%</span>
+        </div>
+        <div class="progress-bar-wrap">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
     <header class="top-header">
-        <div class="logo"><span>|||</span> PORAWAT <span>DEV</span></div>
+        <div class="logo" data-text="PORAWAT DEV">
+            <span>|||</span> <span class="glitch-text" data-text="PORAWAT">PORAWAT</span> <span>DEV</span>
+        </div>
         <div class="contact-info">
             <span>📞 099-999-9999</span>
             <span>📍 Roi Et, Thailand</span>
@@ -25,11 +42,13 @@
     </nav>
 
     <div class="hero-section">
+        <div id="particles-js"></div>
+
         <main>
-            <h1>Computer Science</h1>
-            <p class="subtitle">Normal Speed Meets Every Need</p>
+            <h1><span class="auto-type"></span></h1>
+            <p class="subtitle" data-aos="fade-up" data-aos-delay="200">Normal Speed Meets Every Need</p>
             
-            <div class="content-box profile-layout">
+            <div class="content-box profile-layout" data-aos="zoom-in-up" data-aos-delay="400" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2">
                 <div class="profile-image">
                     <img src="img/1.jpg" alt="My Profile Picture"> 
                 </div>
@@ -39,7 +58,7 @@
                     <p>Welcome to my website! This space showcases my background, portfolio, and various activities I have participated in during my studies.</p>
                     <p>Please feel free to use the navigation menu above to explore other sections.</p>
                     
-                    <a href="Resume.pdf" target="_blank" class="btn-download">📄 Download CV</a>
+                    <a href="Resume.pdf" target="_blank" class="btn-download magnetic">📄 Download CV</a>
                 </div>
             </div>
         </main>
@@ -48,5 +67,267 @@
     <footer>
         <p>&copy; 2026 <span>Porawat Phikulsri</span>. All Rights Reserved.</p>
     </footer>
+
+    <button id="terminal-toggle">_></button>
+    <button id="theme-toggle" class="theme-toggle" title="Switch Theme">🌙</button>
+    <div id="terminal-overlay" class="hidden">
+        <div class="terminal-header">
+            <span>admin@porawat-os:~</span>
+            <button id="close-terminal">X</button>
+        </div>
+        <div id="terminal-output">
+            <p>Welcome to Porawat OS v1.0.0</p>
+            <p>Type <span style="color: yellow;">'help'</span> to see available commands.</p>
+        </div>
+        <div class="terminal-input-line">
+            <span>$ </span><input type="text" id="terminal-input" autocomplete="off" spellcheck="false">
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    
+    <script>
+        // --- 1. ระบบ Loading Screen ---
+        let preloader = document.getElementById('preloader');
+        let loadPercent = document.querySelector('.load-percent');
+        let count = 0;
+        let loaderInterval = setInterval(() => {
+            count += Math.floor(Math.random() * 10) + 1;
+            if (count > 100) count = 100;
+            loadPercent.innerText = count + '%';
+            if (count === 100) {
+                clearInterval(loaderInterval);
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => { preloader.style.display = 'none'; }, 500);
+                }, 300);
+            }
+        }, 50);
+
+        // --- 2. แอนิเมชันเลื่อนหน้าจอ ---
+        AOS.init({ duration: 1000, once: true });
+
+        // --- 3. เอฟเฟกต์พิมพ์ข้อความ ---
+        new Typed(".auto-type", {
+            strings: ["Computer Science", "Web Developer", "Software Engineer", "System Architect"],
+            typeSpeed: 60,
+            backSpeed: 40,
+            loop: true
+        });
+
+        // --- 4. ระบบ Custom Cursor ---
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+
+        window.addEventListener("mousemove", function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // --- 5. ปุ่มพลังแม่เหล็ก (Magnetic Button) ---
+        const magneticBtn = document.querySelector('.magnetic');
+        magneticBtn.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            this.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.05)`;
+        });
+        magneticBtn.addEventListener('mouseleave', function() {
+            this.style.transform = `translate(0px, 0px) scale(1)`;
+        });
+
+        // --- 6. พื้นหลัง Particles ---
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80 },
+                "color": { "value": "#ffd200" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3 },
+                "line_linked": { "enable": true, "distance": 150, "color": "#ffd200", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 3, "out_mode": "out" }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } } }
+            },
+            "retina_detect": true
+        });
+        // --- ฟีเจอร์ที่ 1: ระบบ Terminal ลับ ---
+        const terminalToggle = document.getElementById('terminal-toggle');
+        const terminalOverlay = document.getElementById('terminal-overlay');
+        const closeTerminal = document.getElementById('close-terminal');
+        const terminalInput = document.getElementById('terminal-input');
+        const terminalOutput = document.getElementById('terminal-output');
+
+        function toggleTerminal() {
+            terminalOverlay.classList.toggle('hidden');
+            if(!terminalOverlay.classList.contains('hidden')) {
+                setTimeout(() => terminalInput.focus(), 100); // โฟกัสช่องพิมพ์อัตโนมัติ
+            }
+        }
+
+        terminalToggle.addEventListener('click', toggleTerminal);
+        closeTerminal.addEventListener('click', toggleTerminal);
+
+        // ดักจับการกดปุ่ม Enter
+        terminalInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim().toLowerCase();
+                if (command) processCommand(command);
+                this.value = '';
+            }
+        });
+
+        // ฟังก์ชันแสดงข้อความบนหน้าจอ Terminal
+        function printOutput(text, isCommand = false) {
+            const p = document.createElement('p');
+            if(isCommand) p.innerHTML = `<span style="color: #fff;">$ ${text}</span>`;
+            else p.innerHTML = text;
+            terminalOutput.appendChild(p);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight; // เลื่อนจอลงอัตโนมัติ
+        }
+
+        // ระบบประมวลผลคำสั่ง
+        function processCommand(cmd) {
+            printOutput(cmd, true);
+            switch(cmd) {
+                case 'help':
+                    printOutput('Available commands:<br>- <span style="color:yellow;">skills</span> : แสดงทักษะการเขียนโค้ด<br>- <span style="color:yellow;">hire</span>   : แสดงข้อมูลติดต่อ<br>- <span style="color:yellow;">clear</span>  : ล้างหน้าจอ<br>- <span style="color:yellow;">exit</span>   : ปิดระบบ');
+                    break;
+                case 'skills':
+                    printOutput('Loading skills...<br>HTML/CSS [████████--] 80%<br>Python   [███████---] 70%<br>MongoDB  [██████----] 65%<br>Logic    [█████████-] 90%');
+                    break;
+                case 'hire':
+                    printOutput('Initiating hire protocol...<br>Email: xxx@gmail.com<br>Phone: 099-999-9999<br>Status: <span style="color:yellow;">AVAILABLE FOR WORK</span>');
+                    break;
+                case 'clear':
+                    terminalOutput.innerHTML = '';
+                    break;
+                case 'exit':
+                    toggleTerminal();
+                    break;
+                case 'sudo':
+                    printOutput('<span style="color:red;">ACCESS DENIED: You are not an admin!</span>');
+                    break;
+                default:
+                    printOutput(`Command not found: ${cmd}. Type 'help' for options.`);
+            }
+        }
+        // ==========================================
+        // --- ฟีเจอร์ที่ 2: ระบบเสียง UI (Web Audio API) ---
+        // ==========================================
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            // ป้องกันเบราว์เซอร์บล็อกเสียง
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (type === 'hover') {
+                // เสียง Hover (ติ๊ดเบาๆ แบบไฮเทค)
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(800, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.03, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'click') {
+                // เสียง Click (ปิ๊บสั้นๆ แบบปุ่มกดหุ่นยนต์)
+                oscillator.type = 'square';
+                oscillator.frequency.setValueAtTime(600, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.15);
+                gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.15);
+            }
+        }
+
+        // สั่งให้ปุ่มและลิงก์ทั้งหมดในเว็บมีเสียงเวลาเอาเมาส์ชี้และคลิก
+        document.querySelectorAll('a, button, .magnetic').forEach(elem => {
+            elem.addEventListener('mouseenter', () => playSound('hover'));
+            elem.addEventListener('click', () => playSound('click'));
+        });
+        // ==========================================
+        // --- ฟีเจอร์ที่ 3: ระบบ Dark Mode / Light Mode ---
+        // ==========================================
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const bodyElement = document.body;
+
+        // 1. ตรวจสอบว่าผู้ใช้เคยเลือก Dark Mode ไว้ไหม (ถ้าระบบจำได้ จะเปิดโหมดนี้เลย)
+        if (localStorage.getItem('theme') === 'dark') {
+            bodyElement.classList.add('dark-theme');
+            themeToggleBtn.innerText = '☀️'; // เปลี่ยนไอคอนเป็นพระอาทิตย์
+        }
+
+        // 2. เมื่อกดปุ่มสลับโหมด
+        themeToggleBtn.addEventListener('click', () => {
+            playSound('click'); // เล่นเสียงปิ๊บตอนกดสวิตช์ด้วย!
+            
+            // สลับคลาส dark-theme ที่ body
+            bodyElement.classList.toggle('dark-theme');
+            
+            // ตรวจสอบสถานะและบันทึกลง Local Storage
+            if (bodyElement.classList.contains('dark-theme')) {
+                themeToggleBtn.innerText = '☀️';
+                localStorage.setItem('theme', 'dark'); // จำไว้ว่าชอบสายดาร์ก
+            } else {
+                themeToggleBtn.innerText = '🌙';
+                localStorage.setItem('theme', 'light'); // จำไว้ว่าชอบสายสว่าง
+            }
+        });
+        // ==========================================
+        // --- ฟีเจอร์ที่ 4: Page Transitions (เปลี่ยนหน้าแบบภาพยนตร์) ---
+        // ==========================================
+        
+        // 1. เมื่อโหลดหน้าเว็บเสร็จ ให้ม่านค่อยๆ เฟดออก (สว่างขึ้น)
+        window.addEventListener('load', () => {
+            const transitionEl = document.querySelector('.page-transition');
+            if (transitionEl) {
+                setTimeout(() => {
+                    transitionEl.classList.add('fade-out');
+                }, 300); // ดีเลย์นิดนึงให้เอฟเฟกต์แฮกเกอร์โหลดเสร็จก่อน
+            }
+        });
+
+        // 2. ดักจับการกดเมนูลิงก์ เพื่อเฟดม่านปิดจอก่อนย้ายหน้า
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                // ยกเว้นลิงก์ที่ชี้ไปหน้าเดียวกัน
+                if (this.href === window.location.href) return; 
+                
+                e.preventDefault(); // หยุดการเปลี่ยนหน้าแบบกระพริบทันที
+                const targetUrl = this.href;
+                const transitionEl = document.querySelector('.page-transition');
+                
+                // สั่งให้ม่านมืดลง
+                if (transitionEl) {
+                    transitionEl.classList.remove('fade-out');
+                    transitionEl.classList.add('fade-in');
+                }
+
+                // รอ 0.5 วินาที ให้ม่านปิดสนิท แล้วค่อยย้ายหน้า
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 500); 
+            });
+        });
+    </script>
 </body>
 </html>
