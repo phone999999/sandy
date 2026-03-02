@@ -294,30 +294,34 @@ footer span {
 @media (max-width: 768px) {
     /* 1. ส่วนหัว (โลโก้ & เบอร์โทร) */
     .top-header {
-        flex-direction: column; /* เรียงซ้อนกันบน-ล่าง */
-        padding: 15px;
+        flex-direction: column; /* ให้เรียงซ้อนกันบน-ล่าง */
+        padding: 15px 10px;
         text-align: center;
         gap: 10px;
     }
+    .top-header .logo {
+        font-size: 24px; /* ลดขนาดตัวหนังสือโลโก้ลง */
+    }
     .top-header .contact-info {
-        flex-direction: column;
+        flex-direction: column; /* ให้เบอร์โทรกับที่อยู่เรียงบน-ล่าง */
         gap: 5px;
+        font-size: 13px; /* ลดขนาดตัวหนังสือเบอร์โทรลง */
     }
 
-    /* 2. เมนูนำทาง (ให้ปัดบรรทัดได้ถ้าจอเล็กเกิน) */
+    /* 2. เมนูนำทาง */
     nav {
-        padding: 10px 15px;
+        padding: 10px;
     }
     nav ul {
         flex-wrap: wrap; 
         justify-content: center;
-        gap: 15px;
+        gap: 12px;
     }
     nav ul li a {
-        font-size: 14px;
+        font-size: 13px; /* ลดขนาดตัวหนังสือเมนูลงให้ไม่ล้นจอ */
     }
 
-    /* 3. ขนาดตัวอักษรและระยะห่างเนื้อหา */
+    /* 3. ขนาดตัวอักษรเนื้อหา */
     h1 {
         font-size: 32px;
     }
@@ -334,21 +338,22 @@ footer span {
         margin-bottom: 20px;
     }
 
-    /* 4. เลย์เอาต์หน้าหลัก (รูปภาพย้ายไปอยู่บนข้อความ) */
+    /* 4. เลย์เอาต์หน้าหลัก */
     .profile-layout {
         flex-direction: column;
         text-align: center;
-        gap: 20px;
+        gap: 15px;
     }
     .profile-image img {
-        width: 150px; /* ลดขนาดรูปลงบนมือถือ */
-        height: 150px;
+        width: 160px;
+        height: 160px;
     }
 
-    /* 5. ตาราง (ให้สามารถใช้นิ้วเลื่อนซ้าย-ขวาได้ ไม่ให้ล้นจอ) */
+    /* 5. ตาราง */
     table {
         display: block;
         overflow-x: auto;
-        white-space: nowrap; /* ป้องกันข้อความในตารางโดนบีบจนอ่านไม่ออก */
+        white-space: nowrap;
     }
 }
+
