@@ -3,13 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me | My Website</title>
+    <title>About Me | Ultimate Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+    <div id="preloader">
+        <div class="loader-text">
+            <span>Accessing User Data...</span>
+            <span class="load-percent">0%</span>
+        </div>
+        <div class="progress-bar-wrap">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
     <header class="top-header">
-        <div class="logo">
-            <span>|||</span> PORAWAT <span>DEV</span>
+        <div class="logo" data-text="PORAWAT DEV">
+            <span>|||</span> <span class="glitch-text" data-text="PORAWAT">PORAWAT</span> <span>DEV</span>
         </div>
         <div class="contact-info">
             <span>📞 099-999-9999</span>
@@ -27,11 +41,13 @@
     </nav>
 
     <div class="hero-section">
+        <div id="particles-js"></div>
+
         <main>
-            <h1>About Me</h1>
-            <p class="subtitle">Get to know my story and skills</p>
+            <h1><span class="auto-type"></span></h1>
+            <p class="subtitle" data-aos="fade-up" data-aos-delay="200">Get to know my story and skills</p>
             
-            <div class="content-box">
+            <div class="content-box" data-aos="zoom-in-up" data-aos-delay="400" data-tilt data-tilt-max="2" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.1">
                 <h2>📖 Story</h2>
                 <p>
                     Welcome to my About page; here is a brief story about me. I grew up in a small village where the environment led me down the wrong path. I often skipped class, bullied those who couldn't defend themselves, misbehaved, and bragged about things I completely made up. I used to think I just needed to barely graduate so I could go find a manual labor job. 
@@ -53,5 +69,51 @@
     <footer>
         <p>&copy; 2026 <span>Porawat Phikulsri</span>. All Rights Reserved.</p>
     </footer>
+
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    
+    <script>
+        // Preloader
+        let preloader = document.getElementById('preloader');
+        let loadPercent = document.querySelector('.load-percent');
+        let count = 0;
+        let loaderInterval = setInterval(() => {
+            count += Math.floor(Math.random() * 15) + 1;
+            if (count > 100) count = 100;
+            loadPercent.innerText = count + '%';
+            if (count === 100) {
+                clearInterval(loaderInterval);
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => { preloader.style.display = 'none'; }, 500);
+                }, 300);
+            }
+        }, 40);
+
+        // AOS & Typed
+        AOS.init({ duration: 1000, once: true });
+        new Typed(".auto-type", {
+            strings: ["About Me", "My Journey", "My Passions"],
+            typeSpeed: 60, backSpeed: 40, loop: true
+        });
+
+        // Cursor
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+        window.addEventListener("mousemove", (e) => {
+            cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
+            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+        });
+
+        // Particles
+        particlesJS("particles-js", {
+            "particles": { "number": { "value": 80 }, "color": { "value": "#ffd200" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5 }, "size": { "value": 3 }, "line_linked": { "enable": true, "distance": 150, "color": "#ffd200", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 3, "out_mode": "out" } },
+            "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } } } },
+            "retina_detect": true
+        });
+    </script>
 </body>
 </html>
