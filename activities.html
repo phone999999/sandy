@@ -101,6 +101,8 @@
             </div>
         </main>
     </div>
+
+    <button id="theme-toggle" class="theme-toggle" title="Switch Theme">🌙</button>
     
     <footer>
         <p>&copy; 2026 <span>Porawat Phikulsri</span>. All Rights Reserved.</p>
@@ -141,6 +143,33 @@
             "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } } } },
             "retina_detect": true
         });
+        // --- ระบบ Dark Mode / Light Mode (อ่านค่าจากความจำ) ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const bodyElement = document.body;
+
+        // 1. ตรวจสอบความจำว่าผู้ใช้เคยเลือก Dark Mode ไว้ไหม
+        if (localStorage.getItem('theme') === 'dark') {
+            bodyElement.classList.add('dark-theme');
+            if (themeToggleBtn) themeToggleBtn.innerText = '☀️';
+        }
+
+        // 2. ระบบกดปุ่มสลับโหมดสำหรับหน้านี้
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                // ถ้ามีฟังก์ชันเสียงในหน้านี้ให้เล่นเสียงด้วย
+                if (typeof playSound === 'function') playSound('click');
+                
+                bodyElement.classList.toggle('dark-theme');
+                
+                if (bodyElement.classList.contains('dark-theme')) {
+                    themeToggleBtn.innerText = '☀️';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeToggleBtn.innerText = '🌙';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        }
     </script>
 </body>
 </html>
