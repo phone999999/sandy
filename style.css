@@ -169,13 +169,6 @@ td a:hover {
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-@media (max-width: 768px) {
-    .profile-layout {
-        flex-direction: column;
-        text-align: center;
-    }
-}
-
 /* --- ส่วนท้ายเว็บ (Footer) --- */
 footer {
     background-color: #0b2b4d;
@@ -292,4 +285,70 @@ footer span {
 }
 .project-info .btn-view:hover {
     background-color: #e5bd00;
+}
+
+/* =========================================
+   ส่วนรองรับหน้าจอมือถือและแท็บเล็ต (Responsive Design)
+   (โค้ดส่วนนี้จะทำงานเมื่อหน้าจอเล็กกว่า 768px)
+========================================= */
+@media (max-width: 768px) {
+    /* 1. ส่วนหัว (โลโก้ & เบอร์โทร) */
+    .top-header {
+        flex-direction: column; /* เรียงซ้อนกันบน-ล่าง */
+        padding: 15px;
+        text-align: center;
+        gap: 10px;
+    }
+    .top-header .contact-info {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    /* 2. เมนูนำทาง (ให้ปัดบรรทัดได้ถ้าจอเล็กเกิน) */
+    nav {
+        padding: 10px 15px;
+    }
+    nav ul {
+        flex-wrap: wrap; 
+        justify-content: center;
+        gap: 15px;
+    }
+    nav ul li a {
+        font-size: 14px;
+    }
+
+    /* 3. ขนาดตัวอักษรและระยะห่างเนื้อหา */
+    h1 {
+        font-size: 32px;
+    }
+    .subtitle {
+        font-size: 18px;
+        line-height: 1.4;
+    }
+    .hero-section {
+        padding: 30px 15px;
+        min-height: auto;
+    }
+    .content-box {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* 4. เลย์เอาต์หน้าหลัก (รูปภาพย้ายไปอยู่บนข้อความ) */
+    .profile-layout {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    .profile-image img {
+        width: 150px; /* ลดขนาดรูปลงบนมือถือ */
+        height: 150px;
+    }
+
+    /* 5. ตาราง (ให้สามารถใช้นิ้วเลื่อนซ้าย-ขวาได้ ไม่ให้ล้นจอ) */
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap; /* ป้องกันข้อความในตารางโดนบีบจนอ่านไม่ออก */
+    }
 }
