@@ -3,13 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignments | My Website</title>
+    <title>Assignments | Ultimate Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+    <div id="preloader">
+        <div class="loader-text">
+            <span>Loading Projects...</span>
+            <span class="load-percent">0%</span>
+        </div>
+        <div class="progress-bar-wrap">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
     <header class="top-header">
-        <div class="logo">
-            <span>|||</span> PORAWAT <span>DEV</span>
+        <div class="logo" data-text="PORAWAT DEV">
+            <span>|||</span> <span class="glitch-text" data-text="PORAWAT">PORAWAT</span> <span>DEV</span>
         </div>
         <div class="contact-info">
             <span>📞 099-999-9999</span>
@@ -27,40 +41,36 @@
     </nav>
 
     <div class="hero-section">
+        <div id="particles-js"></div>
+
         <main>
-            <h1>Assignments</h1>
-            <p class="subtitle">My Portfolio and Projects</p>
+            <h1><span class="auto-type"></span></h1>
+            <p class="subtitle" data-aos="fade-up" data-aos-delay="200">My Portfolio and Web Development Projects</p>
             
-            <div class="content-box">
+            <div class="content-box" data-aos="fade-up" data-aos-delay="400">
                 <h2>Assignments and Portfolio</h2>
                 <p>This page is a collection of my projects and assignments.</p>
                 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Project / Assignment</th>
-                            <th>Link</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Assignment 1</td>
-                            <td>
-                                <a href="https://youtube.com/shorts/xZUM8SvXjHE" target="_blank">🎬 Watch Video 1</a>
-                                <a href="https://youtube.com/shorts/9sx4d4Z6e24" target="_blank">🎬 Watch Video 2</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Assignment 2</td>
-                            <td>
-                                <a href="https://youtu.be/3ZFdtxBhiGg" target="_blank">🎬 Click here to watch (Video 3)</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="projects-grid">
+                    <div class="project-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.3">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=500&q=60" alt="Work" class="project-img">
+                        <div class="project-info">
+                            <h3>Assignment 1</h3>
+                            <p>Basic HTML structure and CSS styling implementation.</p>
+                            <a href="https://youtube.com/shorts/xZUM8SvXjHE" target="_blank" class="btn-view magnetic">🎬 Watch Video 1</a>
+                            <a href="https://youtube.com/shorts/9sx4d4Z6e24" target="_blank" class="btn-view magnetic">🎬 Watch Video 2</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.3">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=500&q=60" alt="Work" class="project-img">
+                        <div class="project-info">
+                            <h3>Assignment 2</h3>
+                            <p>Advanced web development integration and testing.</p>
+                            <a href="https://youtu.be/3ZFdtxBhiGg" target="_blank" class="btn-view magnetic">🎬 Watch Video 3</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -68,5 +78,53 @@
     <footer>
         <p>&copy; 2026 <span>Porawat Phikulsri</span>. All Rights Reserved.</p>
     </footer>
+
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    
+    <script>
+        // Preloader
+        let preloader = document.getElementById('preloader');
+        let loadPercent = document.querySelector('.load-percent');
+        let count = 0;
+        let loaderInterval = setInterval(() => {
+            count += Math.floor(Math.random() * 15) + 1;
+            if (count > 100) count = 100;
+            loadPercent.innerText = count + '%';
+            if (count === 100) { clearInterval(loaderInterval); setTimeout(() => { preloader.style.opacity = '0'; setTimeout(() => { preloader.style.display = 'none'; }, 500); }, 300); }
+        }, 40);
+
+        // AOS & Typed
+        AOS.init({ duration: 1000, once: true });
+        new Typed(".auto-type", { strings: ["My Projects", "Assignments", "Code Repository"], typeSpeed: 60, backSpeed: 40, loop: true });
+
+        // Cursor
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorOutline = document.querySelector(".cursor-outline");
+        window.addEventListener("mousemove", (e) => {
+            cursorDot.style.left = `${e.clientX}px`; cursorDot.style.top = `${e.clientY}px`;
+            cursorOutline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+        });
+
+        // Magnetic Buttons
+        document.querySelectorAll('.magnetic').forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                this.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.05)`;
+            });
+            btn.addEventListener('mouseleave', function() { this.style.transform = `translate(0px, 0px) scale(1)`; });
+        });
+
+        // Particles
+        particlesJS("particles-js", {
+            "particles": { "number": { "value": 80 }, "color": { "value": "#ffd200" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5 }, "size": { "value": 3 }, "line_linked": { "enable": true, "distance": 150, "color": "#ffd200", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 3, "out_mode": "out" } },
+            "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } } } },
+            "retina_detect": true
+        });
+    </script>
 </body>
 </html>
